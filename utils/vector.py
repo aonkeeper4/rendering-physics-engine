@@ -1,20 +1,22 @@
-class Vector:
+from math import sqrt
+
+class Vector3:
     def __init__(self, x=0, y=0, z=0):
         self.x = x
         self.y = y
         self.z = z
 
     def __mul__(self, other):
-        return Vector(self.x*other, self.y*other, self.z*other)
+        return Vector3(self.x*other, self.y*other, self.z*other)
 
     def __truediv__(self, other):
-        return Vector(self.x/other, self.y/other, self.z/other)
+        return Vector3(self.x/other, self.y/other, self.z/other)
 
     def __add__(self, other):
-        return Vector(self.x+other.x, self.y+other.y, self.z+other.z)
+        return Vector3(self.x+other.x, self.y+other.y, self.z+other.z)
 
     def __sub__(self, other):
-        return Vector(self.x-other.x, self.y-other.y, self.z-other.z)
+        return Vector3(self.x-other.x, self.y-other.y, self.z-other.z)
 
     @property
     def length(self):
@@ -23,9 +25,18 @@ class Vector:
     @property
     def normalised(self):
         return self/self.length
+
+    def normalise(self):
+        return self/self.length
     
     def dot(self, other):
         return self.x*other.x + self.y*other.y + self.z*other.z
+
+    def cross(self, other):
+        x = self.y*other.z - self.z*other.y
+        y = self.z*other.x - self.x*other.z
+        z = self.x*other.y - self.y*other.x
+        return Vector3(x, y, z)
 
     def __str__(self):
         return self.__repr__()
