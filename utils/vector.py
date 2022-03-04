@@ -22,12 +22,9 @@ class Vector3:
     def length(self):
         return sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
 
-    @property
-    def normalised(self):
-        return self/self.length
-
-    def normalise(self):
-        return self/self.length
+    @staticmethod
+    def normalised(v):
+        return v/v.length
     
     def dot(self, other):
         return self.x*other.x + self.y*other.y + self.z*other.z

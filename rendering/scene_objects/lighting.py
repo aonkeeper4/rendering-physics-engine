@@ -1,8 +1,13 @@
+from rendering.scene_objects.scene_object import SceneObject
+
 class LightSource(SceneObject):
-    pass
+    def __init__(self, root, pos):
+        super().__init__(root, pos)
 
 class PointLight(LightSource):
-    pass
+    def __init__(self, root, pos):
+        super().__init__(root, pos)
 
 class AreaLight(LightSource):
-    pass
+    def __init__(self, root, pos):
+        super().__init__(root, pos)

@@ -1,29 +1,27 @@
+from rendering.scene_objects.scene_object import SceneObject
+from utils.ray import Ray
+from rendering.utils import get_vector_reflection_from_normal, sphere_line_intersection
+
 class Primitive(SceneObject):
-    def __init__(self, pos):
-        super().__init__(pos)
+    def __init__(self, root, pos):
+        super().__init__(root, pos)
 
     def intersect(self, obj):
         pass
 
 class Sphere(Primitive):
-    def __init__(self, pos, radius):
-        super().__init__(pos)
+    def __init__(self, root, pos, radius):
+        super().__init__(root, pos)
         self.radius = radius
 
-    @staticmethod
-    def sphere_line_intersection(o, u, c, r):
-            nabla = (u.dot(o-c))**2 - ((o-c).length**2-r**2)
-            if nabla < 0: return None #oh god my eyes
-            d0 = -(u.dot(o-c)) + sqrt(nabla)
-            d1 = -(u.dot(o-c)) - sqrt(nabla)
-            v0 = o + u*d0
-            v1 = o + u*d1
-            if nabla == 0: return v0
-            else: return v0, v1
-
-    def intersect(self, obj):
-        if isinstance(obj, Ray):
-            return Sphere.sphere_line_intersection(obj.origin, obj.normal, self.pos, self.radius)
-
+    def bounce(self, ray):
+        intersection_points = sphere_line_intersection(ray.origin, ray.normal, self.pos, self.radius)
+        try: primary = intersection_points[0]
+        except IndexError: return False
+        normal = self.pos - primary
+        reflection = get_vector_reflection_from_normal(ray.normal, normal)
+        print(reflection)
+        return Ray(primary, reflection)
+        
 class Mesh(Primitive):
     pass
