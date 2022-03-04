@@ -14,13 +14,16 @@ class Sphere(Primitive):
         super().__init__(root, pos)
         self.radius = radius
 
+    def intersect(self, ray):
+        intersection_points = sphere_line_intersection(ray.origin, ray.normal, self.pos, self.radius)
+        return intersection_points
+
     def bounce(self, ray):
         intersection_points = sphere_line_intersection(ray.origin, ray.normal, self.pos, self.radius)
         try: primary = intersection_points[0]
         except IndexError: return False
         normal = self.pos - primary
         reflection = get_vector_reflection_from_normal(ray.normal, normal)
-        print(reflection)
         return Ray(primary, reflection)
         
 class Mesh(Primitive):
