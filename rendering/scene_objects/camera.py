@@ -33,6 +33,7 @@ class Camera(SceneObject):
             for i in range(self.resolution[0]):
                 for obj in scene.objects:
                     ray = self.build_camera_ray(i, j)
+                    # very very basic rendering for now
                     if obj.intersect(ray):
                         # framebuffer[j * self.resolution[0] + i] = 1;
                         print("#", end="")
