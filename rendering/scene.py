@@ -1,4 +1,4 @@
-from rendering.scene_objects.camera import Camera
+from rendering.scene_objects import camera, lighting
 
 class Scene:
     def __init__(self):
@@ -6,7 +6,7 @@ class Scene:
         self.camera = None
 
     def add(self, obj):
-        if isinstance(obj, Camera):
+        if isinstance(obj, camera.Camera):
             self.camera = obj
         else:
             self.objects.append(obj)
