@@ -27,21 +27,25 @@ class Camera(scene_object.SceneObject):
                     while ray and total_dist:
                         try:
                             ray, dist = obj.bounce_specular(ray)
-                            print(f"hit {type(obj)}")
-                            # ambient light
-                            ambient = 50
-                            frame_buffer[j, i] = [ambient, ambient, ambient]
                         except TypeError:
                             ray = False
                             break
+                        else:
+                            # print(f"hit {type(obj)}")
+                            # diffuse light
+                            to_light = vector.Vector3.normalised(ray.origin - scene.light.pos)
+                            cos_angle = obj.normal(ray.origin).dot(to_light)
+                            # print(cos_angle)
+                            diffuse = 200 * (1 if cos_angle >= 1 else (0 if cos_angle <= 0 else cos_angle))
+                            frame_buffer[j, i] = [diffuse, diffuse, diffuse]
                         for new_obj in scene.objects:
                             if new_obj == start_obj:
                                 continue
                             if new_obj.intersect(ray):
-                                points, dist = new_obj.intersect(ray)
+                                _, dist = new_obj.intersect(ray)
                                 total_dist += dist
                                 if isinstance(new_obj, lighting.LightSource):
-                                    print("light source found")
+                                    # print("light source found")
                                     # # brightness is inversely proportional to the square of the distance
                                     # brightness = 255/(total_dist**2*0.2)
                                     brightness = 255
@@ -51,7 +55,7 @@ class Camera(scene_object.SceneObject):
                                 obj = new_obj
                         break
                         total_dist += dist
-                    print("moving to new pixel")
+                    # print("moving to new pixel")
 
         img = Image.fromarray(frame_buffer, 'RGB')
         img.save('render.png')

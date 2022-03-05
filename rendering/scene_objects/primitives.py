@@ -14,6 +14,9 @@ class Sphere(Primitive):
         super().__init__(root, pos)
         self.radius = radius
 
+    def normal(self, p):
+        return vector.Vector3.normalised(p - self.pos)
+
     def intersect(self, r):
         intersection_points = sphere_line_intersection(r.origin, r.normal, self.pos, self.radius)
         try: primary = intersection_points[0]
