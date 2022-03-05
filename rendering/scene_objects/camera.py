@@ -3,25 +3,6 @@ from utils import vector, ray
 import numpy as np
 from PIL import Image
 
-# class FrameBuffer:
-#     def __init__(self, width, height, framebuffer=[]):
-#         self.buffer = framebuffer
-#         self.width = width
-#         self.height = height
-#         self.n = 0
-
-#     def __iter__(self):
-#         self.n = 0
-#         return self
-
-#     def __next__(self):
-#         if self.n <= len(self.buffer):
-#             result = (self.n % self.width, self.n // self.width, self.buffer[self.n])
-#             self.n += 1
-#             return result
-#         else:
-#             raise StopIteration
-
 class Camera(scene_object.SceneObject):
     def __init__(self, root, pos, resolution):
         super().__init__(root, pos)
@@ -57,12 +38,13 @@ class Camera(scene_object.SceneObject):
                             if new_obj == start_obj:
                                 continue
                             if new_obj.intersect(ray):
-                                # points, dist = new_obj.intersect(ray)
-                                # total_dist += dist
+                                points, dist = new_obj.intersect(ray)
+                                total_dist += dist
                                 if isinstance(new_obj, lighting.LightSource):
                                     print("light source found")
-                                    # brightness is inversely proportional to the square of the distance
-                                    brightness = 255/total_dist**2
+                                    # # brightness is inversely proportional to the square of the distance
+                                    # brightness = 255/(total_dist**2*0.2)
+                                    brightness = 255
                                     frame_buffer[j, i] = [brightness, brightness, brightness]
                                     ray = False
                                     break

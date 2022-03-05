@@ -4,7 +4,7 @@ from rendering.scene_objects import primitives, camera, lighting
 
 root = Scene()
 
-light = lighting.PointLight(root, vector.Vector3(2, 2, 2), 1)
+light = lighting.PointLight(root, vector.Vector3(3, 3, 3), 3)
 camera = camera.Camera(root, vector.Vector3(0, 0, 4), (256, 144))
 
 sphere = primitives.Sphere(root, vector.Vector3(0, 0, 0), 1)
