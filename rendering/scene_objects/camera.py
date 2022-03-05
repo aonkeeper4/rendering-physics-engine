@@ -11,8 +11,9 @@ class Camera(scene_object.SceneObject):
         self.screen_size = (4, 4*self.resolution[1]/self.resolution[0])
 
     def render(self, scene):
-        # this renders the specular highlight. how do i make it render diffuse light?
         # https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview/ray-tracing-rendering-technique-overview
+        # depth buffer to order objs correctly
+        # also shadows
         w, h = self.resolution
         frame_buffer = np.zeros((h, w, 3), dtype=np.uint8)
         for j in range(self.resolution[1]):
