@@ -1,15 +1,15 @@
-from utils import vector, ray
+from utils import matrix, ray
 from rendering.scene import Scene
 from rendering.scene_objects import primitives, camera, lighting
 
 root = Scene()
 
-light = lighting.PointLight(root, vector.Vector3(8, 4, 4), 2)
-cam = camera.Camera(root, vector.Vector3(0, 0, 4), (108, 72))
+light = lighting.PointLight(root, matrix.Vector(8, 4, 4), 2)
+cam = camera.Camera(root, matrix.Vector(0, 0, 4), (108, 72))
 
-sphere1 = primitives.Sphere(root, vector.Vector3(0, -1.5, -2), 1)
-sphere1 = primitives.Sphere(root, vector.Vector3(0, 1.5, -2), 1)
-sphere3 = primitives.Sphere(root, vector.Vector3(1.25, 0, 0), 1)
-sphere4 = primitives.Sphere(root, vector.Vector3(-1.25, 0, 0), 1)
+sphere1 = primitives.Sphere(root, matrix.Vector(0, -1.5, -2), 1)
+sphere1 = primitives.Sphere(root, matrix.Vector(0, 1.5, -2), 1)
+sphere3 = primitives.Sphere(root, matrix.Vector(1.25, 0, 0), 1)
+sphere4 = primitives.Sphere(root, matrix.Vector(-1.25, 0, 0), 1)
 
 root.render()
