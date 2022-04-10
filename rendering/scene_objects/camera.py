@@ -1,5 +1,5 @@
 from rendering.scene_objects import scene_object, lighting
-from utils import vector, ray
+from utils import matrix, ray
 import numpy as np
 from PIL import Image
 
@@ -34,7 +34,7 @@ class Camera(scene_object.SceneObject):
                         else:
                             # print(f"hit {type(obj)}")
                             # diffuse light
-                            to_light = vector.Vector3.normalised(ray.origin - scene.light.pos)
+                            to_light = matrix.Vector.normalize(ray.origin - scene.light.pos)
                             cos_angle = obj.normal(ray.origin).dot(to_light)
                             # print(cos_angle)
                             diffuse = 200 * (1 if cos_angle >= 1 else (0 if cos_angle <= 0 else cos_angle))
@@ -65,5 +65,5 @@ class Camera(scene_object.SceneObject):
     def build_camera_ray(self, i, j):
         world_i = (i * self.screen_size[0] / self.resolution[0]) - self.screen_size[0]/2
         world_j = (j * self.screen_size[1] / self.resolution[1]) - self.screen_size[1]/2
-        direction = vector.Vector3(world_i, world_j, self.screen_distance) - self.pos
-        return ray.Ray(self.pos, vector.Vector3.normalised(direction))
+        direction = matrix.Vector(world_i, world_j, self.screen_distance) - self.pos
+        return ray.Ray(self.pos, matrix.Vector.normalize(direction))
