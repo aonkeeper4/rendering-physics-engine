@@ -119,6 +119,20 @@ class Matrix:
             raise TypeError('Determinant can only be calculated on a Matrix')
 
     @staticmethod
+    def adj(mat):
+        if isinstance(mat, Matrix):
+            return mat.adjoint()
+        else:
+            raise TypeError('Adjoint can only be calculated on a Matrix')
+
+    @staticmethod
+    def inv(mat):
+        if isinstance(mat, Matrix):
+            return mat.inverse()
+        else:
+            raise TypeError('Inverse can only be calculated on a Matrix')
+
+    @staticmethod
     def rotate(angle, axis):
         if axis == 'x':
             return Matrix([[1, 0, 0],
