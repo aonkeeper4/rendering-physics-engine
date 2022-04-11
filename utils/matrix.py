@@ -1,4 +1,4 @@
-from math import sin, cos, sqrt
+from math import sqrt, sin, cos
 import random
 
 def cascade(val, func, n):
@@ -107,6 +107,9 @@ class Matrix:
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __neg__(self):
+        return Matrix([[-x for x in row] for row in self.data])
+
     @staticmethod
     def identity(n):
         return Matrix([[1 if i == j else 0 for i in range(n)] for j in range(n)])
@@ -148,8 +151,10 @@ class Matrix:
                            [0, 0, 1]])
         else:
             raise ValueError('Axis must be x, y, or z')
+
+
 class Vector:
-    def __init__(self, *data):
+    def __init__(self, data):
         self.data = data
 
     @property
@@ -225,16 +230,22 @@ class Vector:
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def normalized(self):
-        return self / self.length
+    def __neg__(self):
+        return Vector([-x for x in self.data])
+
+    def normalize(self):
+        # In-place normalization
+        for i in range(self.dimension):
+            self.data[i] /= self.length
 
     @staticmethod
-    def normalize(vector):
+    def normalized(vector):
+        # Normalization
         return vector / vector.length
 
     @staticmethod
     def unit_random(length):
-        return Vector([random.random() for _ in range(length)]).normalized()
+        return Vector.normalized(Vector([random.random() for _ in range(length)]))
 
     @staticmethod
     def from_angle(angle, axis):

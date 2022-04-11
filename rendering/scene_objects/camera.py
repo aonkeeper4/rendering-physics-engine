@@ -34,7 +34,7 @@ class Camera(scene_object.SceneObject):
                         else:
                             # print(f"hit {type(obj)}")
                             # diffuse light
-                            to_light = matrix.Vector.normalize(ray.origin - scene.light.pos)
+                            to_light = matrix.Vector.normalized(ray.origin - scene.light.pos)
                             cos_angle = obj.normal(ray.origin).dot(to_light)
                             # print(cos_angle)
                             diffuse = 200 * (1 if cos_angle >= 1 else (0 if cos_angle <= 0 else cos_angle))
@@ -65,5 +65,5 @@ class Camera(scene_object.SceneObject):
     def build_camera_ray(self, i, j):
         world_i = (i * self.screen_size[0] / self.resolution[0]) - self.screen_size[0]/2
         world_j = (j * self.screen_size[1] / self.resolution[1]) - self.screen_size[1]/2
-        direction = matrix.Vector(world_i, world_j, self.screen_distance) - self.pos
-        return ray.Ray(self.pos, matrix.Vector.normalize(direction))
+        direction = matrix.Vector([world_i, world_j, self.screen_distance]) - self.pos
+        return ray.Ray(self.pos, matrix.Vector.normalized(direction))

@@ -15,7 +15,7 @@ class Sphere(Primitive):
         self.radius = radius
 
     def normal(self, p):
-        return matrix.Vector.normalize(p - self.pos)
+        return matrix.Vector.normalized(p - self.pos)
 
     def intersect(self, r):
         intersection_points = sphere_line_intersection(r.origin, r.normal, self.pos, self.radius)
@@ -28,7 +28,7 @@ class Sphere(Primitive):
         try: primary = intersection_points[0]
         except IndexError: return False
         normal = primary - self.pos
-        reflection = get_specular_reflection_from_normal(r.normal, matrix.Vector.normalize(normal))
+        reflection = get_specular_reflection_from_normal(r.normal, matrix.Vector.normalized(normal))
         return ray.Ray(primary, reflection), (primary - r.origin).length
 
     def bounce_diffuse(self, r):
@@ -36,7 +36,7 @@ class Sphere(Primitive):
         try: primary = intersection_points[0]
         except IndexError: return False
         normal = primary - self.pos
-        reflection = get_diffuse_reflection_from_normal(r.normal, matrix.Vector.normalize(normal))
+        reflection = get_diffuse_reflection_from_normal(r.normal, matrix.Vector.normalized(normal))
         return ray.Ray(primary, reflection), (primary - r.origin).length
         
 class Mesh(Primitive):
