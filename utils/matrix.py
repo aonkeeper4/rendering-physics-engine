@@ -25,7 +25,7 @@ class Matrix:
     def __str__(self):
         return '\n'.join(['\t'.join([str(x) for x in row]) for row in self.data])
 
-    def __matmul__(self, other):
+    def __matmul__(self, other: T) -> T:
         if isinstance(other, Matrix) and self.width == other.height and self.height == other.width:
             return Matrix([[sum(a*b for a, b in zip(row, col)) for col in zip(*other.data)] for row in self.data])
         elif isinstance(other, Vector) and self.width == other.dimension:
